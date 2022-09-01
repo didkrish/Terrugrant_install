@@ -1,19 +1,23 @@
-version: 2.1
-orbs:
-  terragrunt: dialogue/terragrunt@1.6.0
 jobs:
-  example-job:
-    docker:
-      # replace with your preferred image
-      - image: cimg/base:stable
+
+  build:
+
+    machine:
+
+      image: ubuntu-2004:2022.07.1
+
     steps:
-      - run: sudo chmod o+x /bin/* 
-      - terragrunt/install-terragrunt:
-          version: '0.7.4'
 
+      - checkout
 
+      # Whatever you want to do
 
-workflows:
-  example-workflow:
-    jobs:
-      - example-job
+      - run: sudo apt-get update
+
+      - run: sudo wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.9/terragrunt_linux_arm64
+
+      - run: sudo mv terragrunt_linux_arm64 terragrunt
+
+      - run: sudo chmod u+x terragrunt
+
+      - run: sudo mv terragrunt /usr/local/bin/terragrunt
